@@ -1,15 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
 
 import '../env/env_config.dart';
 
 class HttpService {
   late final Dio _dio;
-  late final EnvConfig _envConfig;
+  final EnvConfig _envConfig;
 
-  HttpService() {
+  HttpService(this._envConfig) {
     _dio = Dio();
-    _envConfig = GetIt.instance.get<EnvConfig>();
   }
 
   Future<Response> get(

@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:flck_radar/core/env/env_config.dart';
-import 'package:flck_radar/core/services/http_service.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../core/route/app_routes.dart';
 
@@ -19,7 +16,6 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 2), () {
-      _setUp(context);
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     });
   }
@@ -53,11 +49,5 @@ class SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _setUp(BuildContext context) async {
-    final getIt = GetIt.instance;
-    getIt.registerSingleton<EnvConfig>(EnvConfig());
-    getIt.registerSingleton<HttpService>(HttpService());
   }
 }
