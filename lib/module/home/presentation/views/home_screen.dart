@@ -1,3 +1,6 @@
+import 'package:flck_radar/module/home/domain/entities/movie.dart';
+import 'package:flck_radar/module/home/presentation/views/widgets/background_image_view.dart';
+import 'package:flck_radar/module/home/presentation/views/widgets/fore_ground_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,24 +27,29 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     final viewModel = ref.watch(homeViewModelProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
       body: viewModel.state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : viewModel.state.errorMessage != null
               ? Center(child: Text(viewModel.state.errorMessage!))
               : viewModel.state.movies != null
-                  ? ListView.builder(
-                      itemCount: viewModel.state.movies!.results.length,
-                      itemBuilder: (context, index) {
-                        final movie = viewModel.state.movies!.results[index];
-                        return ListTile(
-                          title: Text(movie.title),
-                          subtitle: Text(movie.overview),
-                        );
-                      })
+                  ? _buildUI(viewModel.state.movies!.results, context)
                   : const Center(
                       child: Text("No Movies found"),
                     ),
+    );
+  }
+
+  Widget _buildUI(List<Movie> results, BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [BackgroundImageView(), ForeGroundView()],
+        ),
+      ),
     );
   }
 }
